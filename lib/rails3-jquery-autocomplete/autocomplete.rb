@@ -57,7 +57,11 @@ module Rails3JQueryAutocomplete
             items = {}
           end
 
-          render :json => json_for_autocomplete(items, options[:display_value] ||= method, options[:extra_data])
+          render :json => if block_given?
+                            yield items
+                          else
+                            json_for_autocomplete(items, options[:display_value] ||= method, options[:extra_data])
+                          end
         end
       end
     end
